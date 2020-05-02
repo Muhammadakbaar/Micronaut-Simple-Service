@@ -1,0 +1,16 @@
+stages:
+- name: Build
+  steps:
+  - publishImageConfig:
+      dockerfilePath: ./Dockerfile
+      buildContext: .
+      tag: steamdom-master:${CICD_GIT_BRANCH}-${CICD_EXECUTION_SEQUENCE}
+- name: Deploy
+  steps:
+  - applyYamlConfig:
+      path: ./${CICD_GIT_BRANCH}-deployment.yaml
+timeout: 60
+branch:
+  include:
+  - dev
+notification: {}
